@@ -370,7 +370,7 @@ forever(function () {
         _3.setVelocity(0, 60)
         game.over(true, effects.smiles)
     }
-    if (info.score() == 1) {
+    if (info.score() == 1000) {
         sprites.destroyAllSpritesOfKind(SpriteKind.Player)
         sprites.destroyAllSpritesOfKind(SpriteKind.player2)
         sprites.destroyAllSpritesOfKind(SpriteKind.Projectile)
