@@ -19,6 +19,9 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     effects.clearParticles(Player1)
 })
+info.onCountdownEnd(function () {
+    game.over(true, effects.starField)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite2, otherSprite2) {
     info.player1.changeLifeBy(-1)
 })
@@ -48,7 +51,28 @@ controller.player2.onEvent(ControllerEvent.Connected, function () {
     _1.setVelocity(0, -50)
     _2.setVelocity(0, -50)
     _3.setVelocity(0, -50)
+    for (let index = 0; index < 9000; index++) {
+        if (info.player1.hasLife() && info.player2.hasLife()) {
+            info.player1.changeScoreBy(1)
+            info.player2.changeScoreBy(1)
+            pause(100)
+        }
+        if (info.player1.life() == 1 && info.player2.life() == 0) {
+            info.player1.changeScoreBy(1)
+            pause(100)
+        }
+        if (info.player1.life() == 0 && info.player2.life() == 1) {
+            info.player2.changeScoreBy(1)
+            pause(100)
+        }
+        if (Reeesett == 2) {
+            pause(500)
+            game.over(false)
+            game.reset()
+        }
+    }
 })
+let Reeesett = 0
 let _3: Sprite = null
 let _2: Sprite = null
 let _1: Sprite = null
@@ -187,8 +211,8 @@ controller.player2.moveSprite(Player2)
 Walls.setPosition(74, 1)
 Walls.changeScale(10, ScaleAnchor.Bottom)
 Floor.changeScale(10, ScaleAnchor.Bottom)
-Floor.setPosition(81, 31)
-_1.setPosition(77, 107)
+Floor.setPosition(80, 32)
+_1.setPosition(77, 115)
 _2.setPosition(77, 0)
 _3.setPosition(77, 0)
 scene.setBackgroundImage(img`
@@ -322,29 +346,11 @@ info.player1.setScore(0)
 info.player2.setScore(0)
 info.player1.setLife(1)
 info.player2.setLife(1)
-let Reeesett = 0
+Reeesett = 0
 game.onUpdateInterval(1000, function () {
 	
 })
 forever(function () {
-    if (info.player1.hasLife() && info.player2.hasLife()) {
-        info.player1.changeScoreBy(1)
-        info.player2.changeScoreBy(1)
-        pause(1000)
-    }
-    if (info.player1.life() == 1 && info.player2.life() == 0) {
-        info.player1.changeScoreBy(1)
-        pause(1000)
-    }
-    if (info.player1.life() == 0 && info.player2.life() == 1) {
-        info.player2.changeScoreBy(1)
-        pause(1000)
-    }
-    if (Reeesett == 2) {
-        pause(500)
-        game.over(false)
-        game.reset()
-    }
     if (_1.overlapsWith(Walls)) {
         _2.setPosition(77, 90)
     }
@@ -355,20 +361,25 @@ forever(function () {
         _1.setPosition(77, 90)
     }
     if (info.score() == 10) {
-        _1.setVelocity(0, 50)
-        _2.setVelocity(0, 50)
-        _3.setVelocity(0, 50)
-    }
-    if (info.score() == 50) {
         _1.setVelocity(0, -60)
         _2.setVelocity(0, -60)
         _3.setVelocity(0, -60)
     }
+    if (info.score() == 50) {
+        _1.setVelocity(0, -70)
+        _2.setVelocity(0, -70)
+        _3.setVelocity(0, -70)
+    }
     if (info.score() == 100) {
-        _1.setVelocity(0, 60)
-        _2.setVelocity(0, 60)
-        _3.setVelocity(0, 60)
-        game.over(true, effects.smiles)
+        _1.setVelocity(0, -80)
+        _2.setVelocity(0, -80)
+        _3.setVelocity(0, -80)
+    }
+    if (info.score() == 150) {
+        _1.setVelocity(0, -90)
+        _2.setVelocity(0, -90)
+        _3.setVelocity(0, -90)
+        info.startCountdown(5)
     }
     if (info.score() == 1000) {
         sprites.destroyAllSpritesOfKind(SpriteKind.Player)
